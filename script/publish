@@ -1,0 +1,9 @@
+#!/bin/bash
+
+VENV="arn.venv"
+
+set -a
+source $VENV/bin/activate
+set +a
+
+inv build upload

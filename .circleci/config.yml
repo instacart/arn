@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7.7
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - deps-v1-{{ checksum "setup.py" }}
+
+      - run:
+          name: Setup venv
+          command: script/bootstrap
+
+      - save_cache:
+          name: Save Package Cache
+          key: deps-v1-{{ checksum "setup.py" }}
+          paths:
+            - arn.venv
+
+      - run:
+          name: Run lint
+          command: script/lint
+
+      - run:
+          name: Run tests
+          command: script/test

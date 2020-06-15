@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+VENV="arn.venv"
+
+if [ -z "$CI" ]; then
+    pyenv install --skip-existing
+fi
+
+test -d $VENV || python3.7 -m venv $VENV || return
+$VENV/bin/pip install "pip<19"
+$VENV/bin/pip install -e ".[dev]"
+source $VENV/bin/activate
