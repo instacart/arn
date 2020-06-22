@@ -26,7 +26,7 @@ def test_override_field(field):
 
 @pytest.mark.parametrize("arn", ["arn:aws::::"])
 def test_parse_arn_invalid(arn):
-    with pytest.raises(InvalidArnException):
+    with pytest.raises(InvalidArnException, match="arn:aws:::: is not a valid ARN"):
         Arn(arn)
 
 
@@ -35,5 +35,8 @@ def test_parse_arn_invalid(arn):
     class CustomArn(Arn):
         REST_PATTERN = re.compile(r"notfoo")
 
-    with pytest.raises(InvalidArnRestException):
+    with pytest.raises(
+        InvalidArnRestException,
+        match="foo is not a valid rest expression for type CustomArn",
+    ):
         CustomArn(arn)
