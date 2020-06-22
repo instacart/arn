@@ -2,7 +2,12 @@ import re
 
 import pytest
 
-from arn import Arn, InvalidArnException, InvalidArnRestException
+from arn import (
+    Arn,
+    ConflictingFieldNamesException,
+    InvalidArnException,
+    InvalidArnRestException,
+)
 
 from .conftest import make_arn
 
@@ -50,5 +55,20 @@ def test_parse_arn_invalid(arn):
     with pytest.raises(
         InvalidArnRestException,
         match="foo is not a valid rest expression for type CustomArn",
+    ):
+        CustomArn(arn)
+
+
+@pytest.mark.parametrize(
+    "field", ["input_arn", "partition", "service", "region", "account"]
+)
+def test_cant_use_reserved_field_name(field):
+    class CustomArn(Arn):
+        REST_PATTERN = re.compile(fr"(?P<{field}>.*)")
+
+    arn = make_arn("service", "rest")
+    with pytest.raises(
+        ConflictingFieldNamesException,
+        match=f"Fields {field} are reserved and cannot be used as field names",
     ):
         CustomArn(arn)
