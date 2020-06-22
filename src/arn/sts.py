@@ -1,13 +1,12 @@
 import re
-from dataclasses import dataclass, field
-from typing import ClassVar, Pattern
+from dataclasses import dataclass
 
 from arn import Arn
 
 
 @dataclass
 class AssumedRoleArn(Arn):
-    REST_PATTERN: ClassVar[Pattern] = re.compile(
+    REST_PATTERN = re.compile(
         r"assumed-role/(?P<role_name>.*)/(?P<role_session_name>.*)"
     )
 

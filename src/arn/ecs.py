@@ -1,15 +1,13 @@
 import re
-from dataclasses import dataclass, field
-from typing import ClassVar, Match, Optional, Pattern
+from dataclasses import dataclass
+from typing import Match
 
 from . import Arn
 
 
 @dataclass
 class TaskDefinitionArn(Arn):
-    REST_PATTERN: ClassVar[Pattern] = re.compile(
-        r"task-definition/(?P<family>.+):(?P<version>\d+)"
-    )
+    REST_PATTERN = re.compile(r"task-definition/(?P<family>.+):(?P<version>\d+)")
 
     family: str = ""
     version: int = 0
@@ -21,17 +19,15 @@ class TaskDefinitionArn(Arn):
 
 @dataclass
 class TaskArn(Arn):
-    REST_PATTERN: ClassVar[Pattern] = re.compile(r"task/(?P<id>.+)")
+    REST_PATTERN = re.compile(r"task/(?P<id>.+)")
 
     id: str = ""
 
 
 @dataclass
 class ServiceArn(Arn):
-    REST_PATTERN_WITHOUT_CLUSTER: ClassVar[Pattern] = re.compile(
-        r"service/(?P<service_name>.*)"
-    )
-    REST_PATTERN_WITH_CLUSTER: ClassVar[Pattern] = re.compile(
+    REST_PATTERN_WITHOUT_CLUSTER = re.compile(r"service/(?P<service_name>.*)")
+    REST_PATTERN_WITH_CLUSTER = re.compile(
         r"service/(?P<cluster>.*)/(?P<service_name>.*)"
     )
 

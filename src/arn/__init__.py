@@ -1,6 +1,6 @@
 import re
 import dataclasses
-from typing import ClassVar, Match, Pattern, Optional, Set
+from typing import ClassVar, Match, Pattern, Optional, Set, Tuple, Dict, Any
 
 BASE_PATTERN = re.compile(
     r"^arn:"
