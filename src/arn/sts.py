@@ -11,5 +11,5 @@ class AssumedRoleArn(Arn):
         r"assumed-role/(?P<role_name>.*)/(?P<role_session_name>.*)"
     )
 
-    role_name: str = field(init=False)
-    role_session_name: str = field(init=False)
+    role_name: str = ""
+    role_session_name: str = ""

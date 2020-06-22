@@ -1,6 +1,6 @@
 import re
 from dataclasses import dataclass, field
-from typing import ClassVar, Match, Pattern
+from typing import ClassVar, Match, Pattern, Optional
 
 BASE_PATTERN = re.compile(
     r"^arn:(?P<partition>.+?):(?P<service>.+?):(?P<region>.*?):(?P<account>\d*?):(?P<rest>.*)$"
@@ -8,38 +8,47 @@ BASE_PATTERN = re.compile(
 
 
 class InvalidArnException(Exception):
-    def __init__(self, arn):
+    def __init__(self, arn: str):
         super().__init__(f"{arn} is not a valid ARN")
+
+
+class InvalidArnRestExcetion(Exception):
+    def __init__(self, rest: str, class_name: str) -> None:
+        super().__init__(f"{rest} is not a valid rest expression for type {class_name}")
 
 
 @dataclass
 class Arn:
     REST_PATTERN: ClassVar[Pattern] = re.compile(r"(?P<rest>.*)")
 
-    arn: str = field(repr=False)
-    partition: str = field(init=False)
-    service: str = field(init=False)
-    region: str = field(init=False)
-    account: str = field(init=False)
-    rest: str = field(init=False, repr=False, compare=False)
+    input_arn: str = ""
+    partition: str = ""
+    service: str = ""
+    region: str = ""
+    account: str = ""
+    rest: str = field(init=False, default="")
 
     def __post_init__(self):
-        match = BASE_PATTERN.match(self.arn)
-        if not match:
-            raise InvalidArnException(self.arn)
+        base_match = BASE_PATTERN.match(self.input_arn)
+        if not base_match:
+            raise InvalidArnException(self.input_arn)
+        self._assign_fields_from_match(base_match)
 
-        self.partition = match["partition"]
-        self.service = match["service"]
-        self.region = match["region"]
-        self.account = match["account"]
-        self.assign_rest(self.match_rest(match["rest"]))
-
-    def match_rest(self, rest: str) -> Match:
-        rest_match = self.REST_PATTERN.match(rest)
+        rest = base_match["rest"]
+        rest_match = self.match_rest(rest)
         if not rest_match:
-            raise InvalidArnException(self.arn)
-        return rest_match
+            raise InvalidArnRestExcetion(rest, self.__class__.__name__)
+        self.assign_rest(rest_match)
+
+    def match_rest(self, rest: str) -> Optional[Match]:
+        return self.REST_PATTERN.match(rest)
 
     def assign_rest(self, match: Match):
+        self._assign_fields_from_match(match)
+
+    def _assign_fields_from_match(self, match):
+        if not match:
+            raise InvalidArnException(self.input_arn)
         for key in match.re.groupindex.keys():
-            setattr(self, key, match[key])
+            if not getattr(self, key):
+                setattr(self, key, match[key])

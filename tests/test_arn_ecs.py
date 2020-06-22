@@ -17,7 +17,7 @@ def test_task_definition():
 def test_service_without_cluster():
     arn = make_ecs_arn("service/servicename")
     result = ecs.ServiceArn(arn)
-    assert result.cluster is None
+    assert result.cluster == ""
     assert result.service == "servicename"
 
 

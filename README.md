@@ -18,7 +18,7 @@ target_group_arn_str = "arn:aws:elasticloadbalancing:us-east-1:123456789012:targ
 target_group_arn = TargetGroupArn(target_group_arn_str)
 
 # the passed-in str is preserved
-assert target_group_arn.arn == target_group_arn_str
+assert target_group_arn.input_arn == target_group_arn_str
 
 # common attributes
 assert target_group_arn.partition == "aws"

@@ -15,6 +15,13 @@ def test_parse_arn_basic():
     assert result.rest == "rest"
 
 
+@pytest.mark.parametrize("field", ["partition", "service", "region", "account"])
+def test_override_field(field):
+    arn = make_arn("service", "rest")
+    result = Arn(arn, **{field: "override"})
+    assert getattr(result, field) == "override"
+
+
 @pytest.mark.parametrize("arn", ["arn:aws::::"])
 def test_parse_arn_invalid(arn):
     with pytest.raises(InvalidArnException):

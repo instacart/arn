@@ -11,8 +11,8 @@ class TaskDefinitionArn(Arn):
         r"task-definition/(?P<family>.+):(?P<version>\d+)"
     )
 
-    family: str = field(init=False)
-    version: int = field(init=False)
+    family: str = ""
+    version: int = 0
 
     def assign_rest(self, match: Match):
         super(TaskDefinitionArn, self).assign_rest(match)
@@ -23,7 +23,7 @@ class TaskDefinitionArn(Arn):
 class TaskArn(Arn):
     REST_PATTERN: ClassVar[Pattern] = re.compile(r"task/(?P<id>.+)")
 
-    id: str = field(init=False)
+    id: str = ""
 
 
 @dataclass
@@ -35,8 +35,8 @@ class ServiceArn(Arn):
         r"service/(?P<cluster>.*)/(?P<service>.*)"
     )
 
-    cluster: Optional[str] = field(init=False)
-    service: str = field(init=False)
+    cluster: str = ""
+    service: str = ""
 
     def match_rest(self, rest: str) -> Match:
         match = self.rest_pattern_with_cluster.match(rest)
@@ -51,5 +51,5 @@ class ServiceArn(Arn):
         try:
             self.cluster = match["cluster"]
         except IndexError:
-            self.cluster = None
+            self.cluster = ""
         self.service = match["service"]

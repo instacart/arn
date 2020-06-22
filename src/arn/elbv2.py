@@ -11,5 +11,5 @@ class TargetGroupArn(Arn):
         r"targetgroup/(?P<name>.*)/(?P<internal_id>.*)"
     )
 
-    name: str = field(init=False)
-    internal_id: str = field(init=False)
+    name: str = ""
+    internal_id: str = ""

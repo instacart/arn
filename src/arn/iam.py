@@ -9,4 +9,4 @@ from . import Arn
 class RoleArn(Arn):
     REST_PATTERN: ClassVar[Pattern] = re.compile(r"role/(?P<name>.*)")
 
-    name: str = field(init=False)
+    name: str = ""
