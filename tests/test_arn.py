@@ -24,6 +24,18 @@ def test_override_field(field):
     assert getattr(result, field) == "override"
 
 
+def test_str():
+    arn = make_arn("service", "rest")
+    result = Arn(arn)
+    assert str(result) == arn
+
+
+def test_str_with_overridden_field():
+    arn = make_arn("service", "rest")
+    result = Arn(arn, partition="foo")
+    assert str(result) == "arn:foo:service:us-east-1:123456789:rest"
+
+
 @pytest.mark.parametrize("arn", ["arn:aws::::"])
 def test_parse_arn_invalid(arn):
     with pytest.raises(InvalidArnException, match="arn:aws:::: is not a valid ARN"):
