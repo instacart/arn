@@ -33,3 +33,4 @@ def test_override_cluster():
     result = ecs.ServiceArn(arn, cluster="foo")
     assert result.cluster == "foo"
     assert result.service_name == "servicename"
+    assert str(result) == "arn:aws:ecs:us-east-1:123456789:service/foo/servicename"

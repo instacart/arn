@@ -46,3 +46,9 @@ class ServiceArn(Arn):
         if match:
             return match
         return super().match_rest(rest)
+
+    def format_rest(self):
+        if self.cluster:
+            return f"service/{self.cluster}/{self.service_name}"
+        else:
+            return f"service/{self.service_name}"
