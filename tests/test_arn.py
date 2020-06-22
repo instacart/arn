@@ -11,7 +11,7 @@ def test_parse_arn_basic():
     assert result.partition == "aws"
     assert result.service == "service"
     assert result.region == "us-east-1"
-    assert result.account == 123456789
+    assert result.account == "123456789"
     assert result.rest == "rest"
 
 

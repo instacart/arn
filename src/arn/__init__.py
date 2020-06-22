@@ -20,7 +20,7 @@ class Arn:
     partition: str = field(init=False)
     service: str = field(init=False)
     region: str = field(init=False)
-    account: int = field(init=False)
+    account: str = field(init=False)
     rest: str = field(init=False, repr=False, compare=False)
 
     def __post_init__(self):
@@ -31,7 +31,7 @@ class Arn:
         self.partition = match["partition"]
         self.service = match["service"]
         self.region = match["region"]
-        self.account = int(match["account"])
+        self.account = match["account"]
         self.assign_rest(self.match_rest(match["rest"]))
 
     def match_rest(self, rest: str) -> Match:
