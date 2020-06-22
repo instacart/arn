@@ -28,28 +28,21 @@ class TaskArn(Arn):
 
 @dataclass
 class ServiceArn(Arn):
-    rest_pattern_without_cluster: ClassVar[Pattern] = re.compile(
-        r"service/(?P<service>.*)"
+    REST_PATTERN_WITHOUT_CLUSTER: ClassVar[Pattern] = re.compile(
+        r"service/(?P<service_name>.*)"
     )
-    rest_pattern_with_cluster: ClassVar[Pattern] = re.compile(
-        r"service/(?P<cluster>.*)/(?P<service>.*)"
+    REST_PATTERN_WITH_CLUSTER: ClassVar[Pattern] = re.compile(
+        r"service/(?P<cluster>.*)/(?P<service_name>.*)"
     )
 
     cluster: str = ""
-    service: str = ""
+    service_name: str = ""
 
     def match_rest(self, rest: str) -> Match:
-        match = self.rest_pattern_with_cluster.match(rest)
+        match = self.REST_PATTERN_WITH_CLUSTER.match(rest)
         if match:
             return match
-        match = self.rest_pattern_without_cluster.match(rest)
+        match = self.REST_PATTERN_WITHOUT_CLUSTER.match(rest)
         if match:
             return match
         return super().match_rest(rest)
-
-    def assign_rest(self, match: Match):
-        try:
-            self.cluster = match["cluster"]
-        except IndexError:
-            self.cluster = ""
-        self.service = match["service"]
