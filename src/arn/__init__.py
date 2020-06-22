@@ -1,6 +1,6 @@
 import re
-from dataclasses import dataclass, field
-from typing import ClassVar, Match, Pattern, Optional
+import dataclasses
+from typing import ClassVar, Match, Pattern, Optional, Set
 
 BASE_PATTERN = re.compile(
     r"^arn:"
@@ -22,7 +22,15 @@ class InvalidArnRestException(Exception):
         super().__init__(f"{rest} is not a valid rest expression for type {class_name}")
 
 
-@dataclass
+class ConflictingFieldNamesException(Exception):
+    def __init__(self, field_names: Set[str]) -> None:
+        super().__init__(
+            f"Fields {', '.join(field_names)} are reserved and "
+            f"cannot be used as field names"
+        )
+
+
+@dataclasses.dataclass
 class Arn:
     REST_PATTERN: ClassVar[Pattern] = re.compile(r"(?P<rest>.*)")
 
@@ -31,7 +39,7 @@ class Arn:
     service: str = ""
     region: str = ""
     account: str = ""
-    rest: str = field(init=False, default="")
+    rest: str = dataclasses.field(init=False, default="")
 
     def __post_init__(self):
         base_match = BASE_PATTERN.match(self.input_arn)
@@ -43,6 +51,13 @@ class Arn:
         rest_match = self.match_rest(rest)
         if not rest_match:
             raise InvalidArnRestException(rest, self.__class__.__name__)
+
+        reserved_field_names = {f.name for f in dataclasses.fields(Arn) if f.init}
+        subclass_field_names = set(rest_match.re.groupindex.keys())
+        conflicting_field_names = reserved_field_names & subclass_field_names
+        if conflicting_field_names:
+            raise ConflictingFieldNamesException(conflicting_field_names)
+
         self.assign_rest(rest_match)
 
     def __str__(self):
