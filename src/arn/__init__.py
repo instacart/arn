@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import ClassVar, Match, Pattern, Optional
 
 BASE_PATTERN = re.compile(
-    r"^arn:(?P<partition>.+?):(?P<service>.+?):(?P<region>.*?):(?P<account>\d*?):(?P<rest>.*)$"
+    r"^arn:(?P<partition>.+?):(?P<service>.+?):(?P<region>.*?):(?P<account>.+?):(?P<rest>.*)$"
 )
 
 
@@ -12,7 +12,7 @@ class InvalidArnException(Exception):
         super().__init__(f"{arn} is not a valid ARN")
 
 
-class InvalidArnRestExcetion(Exception):
+class InvalidArnRestException(Exception):
     def __init__(self, rest: str, class_name: str) -> None:
         super().__init__(f"{rest} is not a valid rest expression for type {class_name}")
 
@@ -37,7 +37,7 @@ class Arn:
         rest = base_match["rest"]
         rest_match = self.match_rest(rest)
         if not rest_match:
-            raise InvalidArnRestExcetion(rest, self.__class__.__name__)
+            raise InvalidArnRestException(rest, self.__class__.__name__)
         self.assign_rest(rest_match)
 
     def match_rest(self, rest: str) -> Optional[Match]:

@@ -1,6 +1,8 @@
+import re
+
 import pytest
 
-from arn import Arn, InvalidArnException
+from arn import Arn, InvalidArnException, InvalidArnRestException
 
 from .conftest import make_arn
 
@@ -26,3 +28,12 @@ def test_override_field(field):
 def test_parse_arn_invalid(arn):
     with pytest.raises(InvalidArnException):
         Arn(arn)
+
+
+@pytest.mark.parametrize("arn", ["arn:aws:service:region:account:foo"])
+def test_parse_arn_invalid(arn):
+    class CustomArn(Arn):
+        REST_PATTERN = re.compile(r"notfoo")
+
+    with pytest.raises(InvalidArnRestException):
+        CustomArn(arn)
