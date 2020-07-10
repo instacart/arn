@@ -48,7 +48,7 @@ def test_parse_arn_invalid(arn):
 
 
 @pytest.mark.parametrize("arn", ["arn:aws:service:region:account:foo"])
-def test_parse_arn_invalid(arn):
+def test_parse_arn_invalid_rest(arn):
     class CustomArn(Arn):
         REST_PATTERN = re.compile(r"notfoo")
 
