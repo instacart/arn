@@ -16,16 +16,20 @@ BASE_PATTERN = re.compile(
 
 class InvalidArnException(Exception):
     def __init__(self, arn: str):
+        self.arn = arn
         super().__init__(f"{arn} is not a valid ARN")
 
 
 class InvalidArnRestException(Exception):
     def __init__(self, rest: str, class_name: str) -> None:
+        self.rest = rest
+        self.class_name = class_name
         super().__init__(f"{rest} is not a valid rest expression for type {class_name}")
 
 
 class ConflictingFieldNamesException(Exception):
     def __init__(self, field_names: Set[str]) -> None:
+        self.field_names = field_names
         super().__init__(
             f"Fields {', '.join(field_names)} are reserved and "
             f"cannot be used as field names"
