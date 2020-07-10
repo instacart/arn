@@ -40,7 +40,7 @@ class Arn:
     partition: str = ""
     service: str = ""
     region: str = ""
-    account: str = ""
+    account: str = ""  # str because some pre-built resources have "aws" as the account
     rest: str = dataclasses.field(init=False, default="")
 
     def __post_init__(self) -> None:

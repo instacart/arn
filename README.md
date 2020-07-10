@@ -24,7 +24,7 @@ assert target_group_arn.input_arn == target_group_arn_str
 assert target_group_arn.partition == "aws"
 assert target_group_arn.service == "elasticloadbalancing"
 assert target_group_arn.region == "us-east-1"
-assert target_group_arn.account == 123456789012
+assert target_group_arn.account == "123456789012"
 
 # attributes specific to the type of AWS resource
 assert target_group_arn.name == "foo-bar"
