@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import dataclasses
 import re
-from typing import ClassVar, Match, Optional, Pattern, Set
+from typing import Any, ClassVar, Match, Optional, Pattern, Set
 
 BASE_PATTERN = re.compile(
     r"^arn:"
@@ -30,21 +32,28 @@ class ConflictingFieldNamesException(Exception):
         )
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass()
 class Arn:
     REST_PATTERN: ClassVar[Pattern] = re.compile(r"(?P<rest>.*)")
 
-    input_arn: str = ""
+    input_arn: Any
     partition: str = ""
     service: str = ""
     region: str = ""
     account: str = ""
     rest: str = dataclasses.field(init=False, default="")
 
-    def __post_init__(self):
-        base_match = BASE_PATTERN.match(self.input_arn)
+    def __post_init__(self) -> None:
+        if isinstance(self.input_arn, bytes):
+            arn = self.input_arn.decode()
+        elif isinstance(self.input_arn, str):
+            arn = self.input_arn
+        else:
+            arn = str(self.input_arn)
+
+        base_match = BASE_PATTERN.match(arn)
         if not base_match:
-            raise InvalidArnException(self.input_arn)
+            raise InvalidArnException(arn)
         self._assign_fields_from_match(base_match)
 
         rest = base_match["rest"]
@@ -80,8 +89,6 @@ class Arn:
         return self.rest
 
     def _assign_fields_from_match(self, match):
-        if not match:
-            raise InvalidArnException(self.input_arn)
         for key in match.re.groupindex.keys():
             if not getattr(self, key):
                 setattr(self, key, match[key])
