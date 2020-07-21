@@ -5,6 +5,12 @@
 PR accomplishes.
 --->
 
+### AWS documentation URL(s)
+
+<!-- 
+If adding or modifying an ARN class, please provide a link to the AWS documentation, if available
+--->
+
 ### Potential issues and known bugs
 
 <!-- Think about any potential issues that could arise due to this change --->
