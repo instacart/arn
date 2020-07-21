@@ -51,9 +51,6 @@ coverage.xml
 *.mo
 *.pot
 
-# pyenv
-.python-version
-
 # Environments
 arn.venv/
 
