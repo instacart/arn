@@ -4,7 +4,10 @@ from invoke import task
 
 BASE_DIR_PATH = Path(__file__).parent
 BASE_DIR = str(BASE_DIR_PATH)
+SRC_DIR = str(BASE_DIR_PATH / "src")
 BUILD_DIR = str(BASE_DIR_PATH / "build")
+DOCS_DIR = str(BASE_DIR_PATH / "docs")
+DOCS_BUILD_DIR = str(BASE_DIR_PATH / "docs" / "_build")
 
 # Lint
 @task()
@@ -88,6 +91,14 @@ def clean(ctx):
         ctx.run(f"find . -type f -name '*'.egg-info -delete")
         ctx.run(f"rm -rf .eggs")
         ctx.run(f"rm -rf {BUILD_DIR} ")
+        ctx.run(f"rm -rf {DOCS_BUILD_DIR} ")
+
+
+@task()
+def docs(ctx):
+    with ctx.cd(DOCS_DIR):
+        ctx.run(f"sphinx-apidoc --module-first --no-toc -f -o {DOCS_DIR} {SRC_DIR}")
+        ctx.run(f"make html")
 
 
 @task(pre=[clean])
