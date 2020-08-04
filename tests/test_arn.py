@@ -33,6 +33,18 @@ def test_str(make_arn):
     assert str(result) == arn
 
 
+@pytest.mark.parametrize(
+    "input_arn",
+    [
+        "arn:aws:service:region:account:foo",
+        b"arn:aws:service:region:account:foo",
+        Arn("arn:aws:service:region:account:foo"),
+    ],
+)
+def test_input_arn_instance_is_preserved(input_arn):
+    assert Arn(input_arn).input_arn == input_arn
+
+
 def test_str_with_overridden_field(make_arn):
     arn = make_arn("service", "rest")
     result = Arn(arn, partition="foo")
