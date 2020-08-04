@@ -15,6 +15,7 @@ setup(
             "pytest==5.2.1",
             "pytest-cov==2.8.1",
             "pytest-watch==4.2.0",
+            "Sphinx==3.1.2",
             "twine==2.0.0",
             "wheel==0.34.2",
         ]
