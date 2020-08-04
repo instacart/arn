@@ -9,10 +9,8 @@ from arn import (
     InvalidArnRestException,
 )
 
-from .conftest import make_arn
 
-
-def test_parse_arn_basic():
+def test_parse_arn_basic(make_arn):
     arn = make_arn("service", "rest")
     result = Arn(arn)
     assert result.partition == "aws"
@@ -23,32 +21,32 @@ def test_parse_arn_basic():
 
 
 @pytest.mark.parametrize("field", ["partition", "service", "region", "account"])
-def test_override_field(field):
+def test_override_field(make_arn, field):
     arn = make_arn("service", "rest")
     result = Arn(arn, **{field: "override"})
     assert getattr(result, field) == "override"
 
 
-def test_str():
+def test_str(make_arn):
     arn = make_arn("service", "rest")
     result = Arn(arn)
     assert str(result) == arn
 
 
-def test_str_with_overridden_field():
+def test_str_with_overridden_field(make_arn):
     arn = make_arn("service", "rest")
     result = Arn(arn, partition="foo")
     assert str(result) == "arn:foo:service:us-east-1:123456789:rest"
 
 
 @pytest.mark.parametrize("arn", ["arn:aws::::"])
-def test_parse_arn_invalid(arn):
+def test_parse_arn_invalid(make_arn, arn):
     with pytest.raises(InvalidArnException, match="arn:aws:::: is not a valid ARN"):
         Arn(arn)
 
 
 @pytest.mark.parametrize("arn", ["arn:aws:service:region:account:foo"])
-def test_parse_arn_invalid_rest(arn):
+def test_parse_arn_invalid_rest(make_arn, arn):
     class CustomArn(Arn):
         REST_PATTERN = re.compile(r"notfoo")
 
@@ -62,7 +60,7 @@ def test_parse_arn_invalid_rest(arn):
 @pytest.mark.parametrize(
     "field", ["input_arn", "partition", "service", "region", "account"]
 )
-def test_cant_use_reserved_field_name(field):
+def test_cant_use_reserved_field_name(make_arn, field):
     class CustomArn(Arn):
         REST_PATTERN = re.compile(fr"(?P<{field}>.*)")
 
