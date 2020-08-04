@@ -1,4 +1,4 @@
-"""ARNs for `AWS ECS <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonelasticcontainerservice.html>`_."""
+"""ARNs for `AWS ECS <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonelasticcontainerservice.html#amazonelasticcontainerservice-resources-for-iam-policies>`_."""
 
 import re
 from dataclasses import dataclass
