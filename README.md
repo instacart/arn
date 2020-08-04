@@ -28,5 +28,5 @@ assert target_group_arn.account == "123456789012"
 
 # attributes specific to the type of AWS resource
 assert target_group_arn.name == "foo-bar"
-assert target_group_arn.internal_id == "abc123"
+assert target_group_arn.id == "abc123"
 ```
