@@ -5,23 +5,39 @@ from arn import Arn
 
 
 @dataclass
-class ApplicationLoadBalancer(Arn):
-    REST_PATTERN = re.compile(r"loadbalancer/app/(?P<name>.*)/(?P<id>.*)")
+class LoadBalancer(Arn):
+    REST_PATTERN = re.compile(r"loadbalancer/(?P<type>app|net)/(?P<name>.*)/(?P<id>.*)")
 
+    type: str = ""
     name: str = ""
     id: str = ""
 
 
 @dataclass
-class ApplicationLoadBalancerListener(Arn):
+class LoadBalancerListener(Arn):
     REST_PATTERN = re.compile(
-        r"listener/app/(?P<load_balancer_name>.*)/(?P<load_balancer_id>.*)"
-        r"/(?P<listener_id>.*)"
+        r"listener/(?P<load_balancer_type>app|net)/(?P<load_balancer_name>.*)"
+        r"/(?P<load_balancer_id>.*)/(?P<listener_id>.*)"
     )
 
+    load_balancer_type: str = ""
     load_balancer_name: str = ""
     load_balancer_id: str = ""
     listener_id: str = ""
+
+
+@dataclass
+class LoadBalancerListenerRule(Arn):
+    REST_PATTERN = re.compile(
+        r"listener-rule/(?P<load_balancer_type>app|net)/(?P<load_balancer_name>.*)"
+        r"/(?P<load_balancer_id>.*)/(?P<listener_id>.*)/(?P<listener_rule_id>.*)"
+    )
+
+    load_balancer_type: str = ""
+    load_balancer_name: str = ""
+    load_balancer_id: str = ""
+    listener_id: str = ""
+    listener_rule_id: str = ""
 
 
 @dataclass
