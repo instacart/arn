@@ -17,6 +17,9 @@ or add the library to your ``setup.py`` / ``requirements.txt``.
 
 Basic Usage
 ^^^^^^^^^^^
+
+To parse an ARN string, use the class that corresponds to the type of ARN. The properties of the ARN are available as members on the result:
+
 .. code-block:: python
 
     from arn.elbv2 import TargetGroupArn
@@ -24,8 +27,8 @@ Basic Usage
     target_group_arn_str = "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/foo-bar/abc123"
     target_group_arn = TargetGroupArn(target_group_arn_str)
 
-    # the passed-in str is preserved
-    assert target_group_arn.input_arn == target_group_arn_str
+    # use the ARN instance's __str__ to format the ARN back into a string
+    assert str(target_group_arn) == target_group_arn_str
 
     # common attributes
     assert target_group_arn.partition == "aws"
