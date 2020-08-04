@@ -60,7 +60,7 @@ class LoadBalancerListenerRule(Arn):
 
 @dataclass
 class TargetGroupArn(Arn):
-    """ARN for a `Target Group <https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html>`_"""
+    """ARN for a `Target Group <https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html>`_."""
 
     REST_PATTERN = re.compile(r"targetgroup/(?P<name>.*)/(?P<id>.*)")
 
