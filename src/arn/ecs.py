@@ -9,7 +9,7 @@ from . import Arn
 
 @dataclass
 class ClusterArn(Arn):
-    """ARN for an `ECS Cluster <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_clusters.html>`_"""
+    """ARN for an `ECS Cluster <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_clusters.html>`_."""
 
     REST_PATTERN = re.compile(r"cluster/(?P<name>.+)")
 
@@ -18,7 +18,7 @@ class ClusterArn(Arn):
 
 @dataclass
 class ContainerInstanceArn(Arn):
-    """ARN for an `ECS Container Instance <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_instances.html>`_"""
+    """ARN for an `ECS Container Instance <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_instances.html>`_."""
 
     REST_PATTERN = re.compile(r"container-instance/(?P<id>.+)")
 
@@ -27,7 +27,7 @@ class ContainerInstanceArn(Arn):
 
 @dataclass
 class ServiceArn(Arn):
-    """ARN for an `ECS Service <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html>`_"""
+    """ARN for an `ECS Service <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html>`_."""
 
     REST_PATTERN_WITHOUT_CLUSTER = re.compile(r"service/(?P<service_name>.*)")
     REST_PATTERN_WITH_CLUSTER = re.compile(
@@ -71,7 +71,7 @@ class ServiceArn(Arn):
 
 @dataclass
 class TaskArn(Arn):
-    """ARN for an `ECS Task <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html>`_"""
+    """ARN for an `ECS Task <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html>`_."""
 
     REST_PATTERN = re.compile(r"task/(?P<id>.+)")
 
@@ -80,7 +80,7 @@ class TaskArn(Arn):
 
 @dataclass
 class TaskDefinitionArn(Arn):
-    """ARN for an `ECS Task Definition <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html>`_"""
+    """ARN for an `ECS Task Definition <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html>`_."""
 
     REST_PATTERN = re.compile(r"task-definition/(?P<family>.+):(?P<version>\d+)")
 
@@ -94,7 +94,7 @@ class TaskDefinitionArn(Arn):
 
 @dataclass
 class CapacityProviderArn(Arn):
-    """ARN for an `ECS Capacity Provider <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity_provider_definitions.html>`_"""
+    """ARN for an `ECS Capacity Provider <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/capacity_provider_definitions.html>`_."""
 
     REST_PATTERN = re.compile(r"capacity-provider/(?P<name>.+)")
 
@@ -103,7 +103,7 @@ class CapacityProviderArn(Arn):
 
 @dataclass
 class TaskSetArn(Arn):
-    """ARN for an `ECS TaskSet <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_sets.html>`_"""
+    """ARN for an `ECS TaskSet <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_sets.html>`_."""
 
     REST_PATTERN = re.compile(
         r"task-set/(?P<cluster_name>.+)/(?P<service_name>.+)/(?P<id>.+)"
