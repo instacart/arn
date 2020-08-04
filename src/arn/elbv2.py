@@ -1,4 +1,8 @@
-"""ARNs for `AWS ELBv2 <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_elasticloadbalancingv2.html#elasticloadbalancingv2-resources-for-iam-policies>`_."""
+"""ARNs for `AWS ELBv2 <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_elasticloadbalancingv2.html#elasticloadbalancingv2-resources-for-iam-policies>`_.
+
+.. _ALB: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html#application-load-balancer-overview
+.. _NLB: https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html#network-load-balancer-overview
+"""
 
 import re
 from dataclasses import dataclass
@@ -8,11 +12,7 @@ from arn import Arn
 
 @dataclass
 class LoadBalancer(Arn):
-    """ARN for an `ALB`_ and `NLB`_.
-
-    .. _ALB: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html#application-load-balancer-overview
-    .. _NLB: https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html#network-load-balancer-overview
-    """
+    """ARN for an `ALB`_ and `NLB`_."""
 
     REST_PATTERN = re.compile(r"loadbalancer/(?P<type>app|net)/(?P<name>.*)/(?P<id>.*)")
 
@@ -25,11 +25,7 @@ class LoadBalancer(Arn):
 
 @dataclass
 class LoadBalancerListener(Arn):
-    """ARN for `ALB`_ and `NLB`_ listeners.
-
-    .. _ALB: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html
-    .. _NLB: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html
-    """
+    """ARN for `ALB`_ and `NLB`_ listeners."""
 
     REST_PATTERN = re.compile(
         r"listener/(?P<load_balancer_type>app|net)/(?P<load_balancer_name>.*)"
@@ -46,11 +42,7 @@ class LoadBalancerListener(Arn):
 
 @dataclass
 class LoadBalancerListenerRule(Arn):
-    """ARN for `ALB`_ and `NLB`_ listener rules.
-
-    .. _ALB: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-update-rules.html
-    .. _NLB: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-update-rules.html
-    """
+    """ARN for `ALB`_ and `NLB`_ listener rules."""
 
     REST_PATTERN = re.compile(
         r"listener-rule/(?P<load_balancer_type>app|net)/(?P<load_balancer_name>.*)"
