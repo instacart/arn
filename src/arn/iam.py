@@ -1,4 +1,9 @@
-"""ARNs for `AWS IAM <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html#identityandaccessmanagement-resources-for-iam-policiess>`_."""
+"""ARNs for `AWS IAM <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html#identityandaccessmanagement-resources-for-iam-policiess>`_ and AWS STS <https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awssecuritytokenservice.html#awssecuritytokenservice-resources-for-iam-policies>_.
+
+These two services are tightly coupled, and some ARNs exist in both or have
+inconsistent documentation (for example, the IAM docs show `assumed-role` with `iam`
+as the service, but the AWS API reference has `sts` as the service).
+"""
 
 import re
 from dataclasses import dataclass
@@ -17,7 +22,7 @@ class RoleArn(Arn):
 
 @dataclass
 class AssumedRoleArn(Arn):
-    """ARN for an `IAM Assumed Role <https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html>`_."""
+    """ARN for an `IAM/STS Assumed Role <https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html>`_."""
 
     REST_PATTERN = re.compile(
         r"assumed-role/(?P<role_name>.*)/(?P<role_session_name>.*)"
