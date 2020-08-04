@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import re
-from typing import Any, ClassVar, Match, Optional, Pattern, Set
+from typing import Any, ClassVar, Match, Optional, Pattern, Set, Union
 
 BASE_PATTERN = re.compile(
     r"^arn:"
@@ -38,7 +38,7 @@ class ConflictingFieldNamesException(Exception):
 
 @dataclasses.dataclass()
 class Arn:
-    REST_PATTERN: ClassVar[Pattern] = re.compile(r"(?P<rest>.*)")
+    REST_PATTERN: ClassVar[Union[str, Pattern]] = re.compile(r"(?P<rest>.*)")
 
     input_arn: Any
     partition: str = ""
@@ -84,7 +84,7 @@ class Arn:
         )
 
     def match_rest(self, rest: str) -> Optional[Match]:
-        return self.REST_PATTERN.match(rest)
+        return re.match(self.REST_PATTERN, rest)
 
     def assign_rest(self, match: Match):
         self._assign_fields_from_match(match)
