@@ -61,6 +61,7 @@ class Arn:
     """The pattern that parses the "rest" of the ARN. The "rest" of and ARN is the part
     that is specific to the AWS service that the ARN represents. When overriding in a
     subclass, this value can be either an `re.Pattern`_ or an ``str``.
+
     .. _re.Pattern: https://docs.python.org/3/library/re.html#regular-expression-objects
     """
 
