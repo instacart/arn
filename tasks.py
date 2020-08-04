@@ -86,6 +86,12 @@ def docs(ctx):
         ctx.run(f"make html")
 
 
+@task(pre=[docs])
+def showdocs(ctx):
+    with ctx.cd(DOCS_BUILD_DIR):
+        ctx.run("open html/index.html")
+
+
 @task(pre=[clean])
 def build(ctx):
     """Build a wheel into the build directory."""
