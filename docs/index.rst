@@ -40,7 +40,7 @@ To parse an ARN string, use the class that corresponds to the type of ARN. The p
     assert target_group_arn.name == "foo-bar"
     assert target_group_arn.id == "abc123"
 
-
+The full list of supported ARNs is available here:
 
 .. toctree::
    :maxdepth: 2
