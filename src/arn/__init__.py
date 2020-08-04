@@ -58,10 +58,8 @@ class Arn:
     """
 
     REST_PATTERN: ClassVar[Union[str, Pattern]] = re.compile(r"(?P<rest>.*)")
-    """The pattern that parses the "rest" of the ARN.
-    
-    The "rest" of and ARN is the part that is specific to the AWS service that the
-    ARN represents.
+    """The pattern that parses the "rest" of the ARN. The "rest" of and ARN is the part
+    that is specific to the AWS service that the ARN represents.
     """
 
     input_arn: Any
