@@ -17,7 +17,7 @@ def test_parses_object_arn(make_arn):
     arn = make_arn("s3", "foo/bar")
     result = s3.ObjectArn(arn)
     assert result.bucket_name == "foo"
-    assert result.name == "bar"
+    assert result.object_name == "bar"
 
 
 def test_parses_job_arn(make_arn):

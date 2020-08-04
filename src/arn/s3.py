@@ -16,10 +16,10 @@ class BucketArn(Arn):
 
 
 class ObjectArn(Arn):
-    REST_PATTERN = re.compile(r"(?P<bucket_name>.*)/(?P<name>.*)")
+    REST_PATTERN = re.compile(r"(?P<bucket_name>.*)/(?P<object_name>.*)")
 
     bucket_name: str = ""
-    name: str = ""
+    object_name: str = ""
 
 
 class JobArn(Arn):
