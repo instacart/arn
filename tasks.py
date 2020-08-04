@@ -79,15 +79,17 @@ def clean(ctx):
 
 
 @task()
-def docs(ctx):
-    """Regenerate module RST docs and render them to HTML."""
+def apidocs(ctx):
+    """Regenerate module RST docs."""
     with ctx.cd(DOCS_DIR):
         ctx.run(f"sphinx-apidoc --module-first --no-toc -f -o {DOCS_DIR} {SRC_DIR}")
+
+
+@task(pre=[apidocs])
+def docs(ctx):
+    """Render docs to HTML and preview them."""
+    with ctx.cd(DOCS_DIR):
         ctx.run(f"make html")
-
-
-@task(pre=[docs])
-def showdocs(ctx):
     with ctx.cd(DOCS_BUILD_DIR):
         ctx.run("open html/index.html")
 

@@ -60,4 +60,7 @@ We use [pytest](https://docs.pytest.org/en/latest/) to run tests, and all classe
 pytest
 ```
 
-When addig a new ARN class, please also add tests to cover the new behaviour.
+When adding a new ARN class, please also add tests to cover the new behaviour.
+
+### Documentation
+Documentation is generated using [sphinx](https://www.sphinx-doc.org/en/master/) and hosted on readthedocs.io, which builds docs automatically. The one manual step is to run `inv apidocs`, which runs [sphinx-apidoc](https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html) to generate the main `modules.rst` file automatically. If your contribution doesn't add any new modules, then this step isn't necessary.
