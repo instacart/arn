@@ -81,7 +81,7 @@ class Arn:
     """The AWS account ID of the resource."""
 
     rest: str = dataclasses.field(init=False, default="")
-    """The rest of the ARN, as matched by :py:const:`REST_PATTERN`"""
+    """The rest of the ARN, as matched by :py:const:`REST_PATTERN`."""
 
     def __post_init__(self) -> None:
         if isinstance(self.input_arn, bytes):
@@ -124,7 +124,7 @@ class Arn:
 
         By default, matches the rest of the ARN against :py:const:`REST_PATTERN`.
         Override this metod to match against a pattern dynamically. For an example,
-        see :py:meth:`arn.ecs.ServiceArn.match_rest`
+        see :py:meth:`arn.ecs.ServiceArn.match_rest`.
 
         .. _re.Match: https://docs.python.org/3/library/re.html#match-objects
         """
@@ -135,7 +135,7 @@ class Arn:
 
         By default, assigns all named groups in :py:const:`REST_PATTERN` as strings.
         Override this method to cast group matches to a more appropriate type. For an
-        example, see :py:meth:`arn.ecs.TaskDefinitionArn.assign_rest`
+        example, see :py:meth:`arn.ecs.TaskDefinitionArn.assign_rest`.
 
         .. _re.Match: https://docs.python.org/3/library/re.html#match-objects
         """

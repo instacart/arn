@@ -40,12 +40,3 @@ arn.s3 module
    :members:
    :undoc-members:
    :show-inheritance:
-
-arn.sts module
---------------
-
-.. automodule:: arn.sts
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
