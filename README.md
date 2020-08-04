@@ -7,7 +7,7 @@ To install, just run
 ```bash
 pip install arn
 ```
-or add the library to your `setup.py`/`requirements.txt`.
+or add the library to your `setup.py` / `requirements.txt`.
 
 ## Usage
 Given an ARN for a particular AWS resource, parse it with the appropriate class:
