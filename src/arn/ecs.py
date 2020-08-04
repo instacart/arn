@@ -6,20 +6,15 @@ from . import Arn
 
 
 @dataclass
-class TaskDefinitionArn(Arn):
-    REST_PATTERN = re.compile(r"task-definition/(?P<family>.+):(?P<version>\d+)")
+class ClusterArn(Arn):
+    REST_PATTERN = re.compile(r"cluster/(?P<name>.+)")
 
-    family: str = ""
-    version: int = 0
-
-    def assign_rest(self, match: Match):
-        super(TaskDefinitionArn, self).assign_rest(match)
-        self.version = int(match["version"])
+    name: str = ""
 
 
 @dataclass
-class TaskArn(Arn):
-    REST_PATTERN = re.compile(r"task/(?P<id>.+)")
+class ContainerInstanceArn(Arn):
+    REST_PATTERN = re.compile(r"container-instance/(?P<id>.+)")
 
     id: str = ""
 
@@ -48,3 +43,40 @@ class ServiceArn(Arn):
             return f"service/{self.cluster}/{self.service_name}"
         else:
             return f"service/{self.service_name}"
+
+
+@dataclass
+class TaskArn(Arn):
+    REST_PATTERN = re.compile(r"task/(?P<id>.+)")
+
+    id: str = ""
+
+
+@dataclass
+class TaskDefinitionArn(Arn):
+    REST_PATTERN = re.compile(r"task-definition/(?P<family>.+):(?P<version>\d+)")
+
+    family: str = ""
+    version: int = 0
+
+    def assign_rest(self, match: Match):
+        super(TaskDefinitionArn, self).assign_rest(match)
+        self.version = int(match["version"])
+
+
+@dataclass
+class CapacityProviderArn(Arn):
+    REST_PATTERN = re.compile(r"capacity-provider/(?P<name>.+)")
+
+    name: str = ""
+
+
+@dataclass
+class TaskSetArn(Arn):
+    REST_PATTERN = re.compile(
+        r"task-set/(?P<cluster_name>.+)/(?P<service_name>.+)/(?P<id>.+)"
+    )
+
+    cluster_name: str = ""
+    service_name: str = ""
+    id: str = ""
