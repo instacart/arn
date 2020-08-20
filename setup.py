@@ -1,12 +1,12 @@
 # read the contents of your README file
-# taken from https://packaging.python.org/guides/making-a-pypi-friendly-readme/
-from os import path
+# adapted from https://packaging.python.org/guides/making-a-pypi-friendly-readme/
+from pathlib import Path
 
 from setuptools import find_packages, setup
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.md")) as f:
-    long_description = f.read()
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+version = (this_directory / "version.txt").read_text().strip()
 
 setup(
     name="arn",
@@ -30,5 +30,5 @@ setup(
             "wheel==0.34.2",
         ]
     },
-    version="0.1.2",
+    version=version,
 )
