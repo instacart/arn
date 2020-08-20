@@ -1,3 +1,5 @@
+import arnmeta
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -22,7 +24,7 @@ copyright = "2020, Instacart"
 author = "Instacart"
 
 # The full version, including alpha/beta/rc tags
-release = "0.0.1"
+release = arnmeta.version
 
 
 # -- General configuration ---------------------------------------------------

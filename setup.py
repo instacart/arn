@@ -4,6 +4,8 @@ from os import path
 
 from setuptools import find_packages, setup
 
+import arnmeta
+
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md")) as f:
     long_description = f.read()
@@ -30,5 +32,5 @@ setup(
             "wheel==0.34.2",
         ]
     },
-    version="0.1.2",
+    version=arnmeta.version,
 )
