@@ -1,4 +1,4 @@
-import arnmeta
+from pathlib import Path
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -24,7 +24,10 @@ copyright = "2020, Instacart"
 author = "Instacart"
 
 # The full version, including alpha/beta/rc tags
-release = arnmeta.version
+root_directory = Path(__file__).parent.parent
+version = (root_directory / "version.txt").read_text().strip()
+
+release = version
 
 
 # -- General configuration ---------------------------------------------------
