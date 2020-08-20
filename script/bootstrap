@@ -9,5 +9,6 @@ fi
 
 test -d $VENV || python3 -m venv $VENV || return
 $VENV/bin/pip install "pip"
+$VENV/bin/pip install -r docs/requirements.txt
 $VENV/bin/pip install -e ".[dev]"
 source $VENV/bin/activate
