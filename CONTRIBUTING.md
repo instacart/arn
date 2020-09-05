@@ -20,10 +20,10 @@ Once pyenv is available, install PyPI dependencies by running
 ```bash
 source script/bootstrap
 ```
-This command will ensure that the correct version of Python is installed, create a virtualenv if necessary, source it, and install all dependencies and development dependencies in it. The script is idempotent, so it's safe to always source it when opening a new terminal 
+This command will ensure that the correct version of Python is installed, create a virtualenv if necessary, source it, and install all dependencies and development dependencies in it. The script is idempotent, so it's safe to always source it when opening a new terminal
 
 ### Concepts
-The main source code of the library is in `src/arn`, generally with one Python file per AWS service (IAM, S3, etc). 
+The main source code of the library is in `src/arn`, generally with one Python file per AWS service (IAM, S3, etc).
 
 To create a new type of ARN, simply subclass the existing `Arn` class and define the pattern that represents that ARN using a regex with named capturing groups:
 ```python
@@ -64,3 +64,10 @@ When adding a new ARN class, please also add tests to cover the new behaviour.
 
 ### Documentation
 Documentation is generated using [sphinx](https://www.sphinx-doc.org/en/master/) and hosted on readthedocs.io, which builds docs automatically. The one manual step is to run `inv apidocs`, which runs [sphinx-apidoc](https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html) to generate the main `modules.rst` file automatically. If your contribution doesn't add any new modules, then this step isn't necessary.
+
+### Releasing
+- Bump the version in [version.txt](version.txt)
+- Commit and push the new version to `master`
+- Run `inv upload` and paste your PyPI API token at the prompt
+- Run `inv tag` to tag the release
+- Add `build/arn-<version>-py3-none-any.whl` to the release and create it on GitHub

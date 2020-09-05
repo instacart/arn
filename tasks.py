@@ -1,4 +1,5 @@
 from pathlib import Path
+import webbrowser
 
 from invoke import task
 
@@ -8,6 +9,7 @@ SRC_DIR = str(BASE_DIR_PATH / "src")
 BUILD_DIR = str(BASE_DIR_PATH / "build")
 DOCS_DIR = str(BASE_DIR_PATH / "docs")
 DOCS_BUILD_DIR = str(BASE_DIR_PATH / "docs" / "_build")
+VERSION_FILE = BASE_DIR_PATH / "version.txt"
 
 # Lint
 @task()
@@ -101,8 +103,15 @@ def build(ctx):
         ctx.run(f"python setup.py bdist_wheel -d {BUILD_DIR}")
 
 
-@task()
+@task(pre=[build])
 def upload(ctx):
     """Upload your wheel to artifactory."""
     with ctx.cd(BASE_DIR):
-        ctx.run(f"twine upload {BUILD_DIR}/*.whl")
+        ctx.run(f"twine upload --username __token__ {BUILD_DIR}/*.whl")
+
+
+@task()
+def tag(ctx):
+    webbrowser.open(
+        f"https://github.com/instacart/arn/releases/new?tag=v{VERSION_FILE.read_text()}"
+    )
