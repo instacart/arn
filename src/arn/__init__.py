@@ -9,7 +9,7 @@ BASE_PATTERN = re.compile(
     r"(?P<partition>.+?):"
     r"(?P<service>.+?):"
     r"(?P<region>.*?):"
-    r"(?P<account>.+?):"
+    r"(?P<account>.*?):"
     r"(?P<rest>.*)$"
 )
 
