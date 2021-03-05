@@ -1,5 +1,5 @@
-from pathlib import Path
 import webbrowser
+from pathlib import Path
 
 from invoke import task
 
