@@ -15,7 +15,7 @@ class NewOldEcsArnMixin:
         Tries to match a new-style ARN with cluster name and falls back to matching
         the ARN without the cluster name.
 
-        .. _both ARN formats: https://www.amazonaws.cn/en/new/2018/amazon-ecs-and-aws-fargate-now-allow-resources-tagging-/
+        .. _both ARN formats: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids
         """
         match = self.REST_PATTERN_WITH_CLUSTER.match(rest)
         if match:
@@ -54,7 +54,7 @@ class ContainerInstanceArn(NewOldEcsArnMixin, Arn):
         If the ARN was originally parsed with the cluster name, it will be added to
         the formatted rest.
 
-        .. _both ARN formats: https://www.amazonaws.cn/en/new/2018/amazon-ecs-and-aws-fargate-now-allow-resources-tagging-/
+        .. _both ARN formats: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids
         """
         if self.cluster:
             return f"container-instance/{self.cluster}/{self.id}"
@@ -81,7 +81,7 @@ class ServiceArn(NewOldEcsArnMixin, Arn):
         If the ARN was originally parsed with the cluster name, it will be added to
         the formatted rest.
 
-        .. _both ARN formats: https://www.amazonaws.cn/en/new/2018/amazon-ecs-and-aws-fargate-now-allow-resources-tagging-/
+        .. _both ARN formats: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids
         """
         if self.cluster:
             return f"service/{self.cluster}/{self.service_name}"
@@ -106,7 +106,7 @@ class TaskArn(NewOldEcsArnMixin, Arn):
         If the ARN was originally parsed with the cluster name, it will be added to
         the formatted rest.
 
-        .. _both ARN formats: https://www.amazonaws.cn/en/new/2018/amazon-ecs-and-aws-fargate-now-allow-resources-tagging-/
+        .. _both ARN formats: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids
         """
         if self.cluster:
             return f"task/{self.cluster}/{self.id}"
