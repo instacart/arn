@@ -1,7 +1,8 @@
 # Changelog
 
 ## v0.1.5
-Added support for the new-style ECS ARN to `ContainerInstance` and `Task`
+- Fixed support for Python 3.6
+- Added support for the new-style ECS ARN to `ContainerInstance` and `Task`
 
 ## v0.1.4 - Make account optional
 `account` is now an optional field, to handle resources that are cross-account such as S3 buckets (#9, thanks @ikben)
