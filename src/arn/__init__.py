@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import dataclasses
 import re
 from typing import Any, ClassVar, Match, Optional, Pattern, Set, Union
