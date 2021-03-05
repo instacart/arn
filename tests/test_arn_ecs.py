@@ -7,9 +7,17 @@ def test_cluster(make_arn):
     assert result.name == "foo"
 
 
-def test_container_instance(make_arn):
+def test_container_instance_without_cluster(make_arn):
     arn = make_arn("ecs", "container-instance/abc123")
     result = ecs.ContainerInstanceArn(arn)
+    assert result.cluster == ""
+    assert result.id == "abc123"
+
+
+def test_container_instance_with_cluster(make_arn):
+    arn = make_arn("ecs", "container-instance/foo/abc123")
+    result = ecs.ContainerInstanceArn(arn)
+    assert result.cluster == "foo"
     assert result.id == "abc123"
 
 
@@ -35,9 +43,17 @@ def test_service_override_cluster(make_arn):
     assert str(result) == "arn:aws:ecs:us-east-1:123456789:service/foo/servicename"
 
 
-def test_task(make_arn):
+def test_task_without_cluster(make_arn):
     arn = make_arn("ecs", "task/abc123")
     result = ecs.TaskArn(arn)
+    assert result.cluster == ""
+    assert result.id == "abc123"
+
+
+def test_task_with_cluster(make_arn):
+    arn = make_arn("ecs", "task/foo/abc123")
+    result = ecs.TaskArn(arn)
+    assert result.cluster == "foo"
     assert result.id == "abc123"
 
 

@@ -7,36 +7,7 @@ from typing import Match
 from . import Arn
 
 
-@dataclass
-class ClusterArn(Arn):
-    """ARN for an `ECS Cluster <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_clusters.html>`_."""
-
-    REST_PATTERN = re.compile(r"cluster/(?P<name>.+)")
-
-    name: str = ""
-
-
-@dataclass
-class ContainerInstanceArn(Arn):
-    """ARN for an `ECS Container Instance <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_instances.html>`_."""
-
-    REST_PATTERN = re.compile(r"container-instance/(?P<id>.+)")
-
-    id: str = ""
-
-
-@dataclass
-class ServiceArn(Arn):
-    """ARN for an `ECS Service <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html>`_."""
-
-    REST_PATTERN_WITHOUT_CLUSTER = re.compile(r"service/(?P<service_name>.*)")
-    REST_PATTERN_WITH_CLUSTER = re.compile(
-        r"service/(?P<cluster>.*)/(?P<service_name>.*)"
-    )
-
-    cluster: str = ""
-    service_name: str = ""
-
+class NewOldEcsArnMixin:
     def match_rest(self, rest: str) -> Match:
         """
         Overridden to handle `both ARN formats`_.
@@ -54,6 +25,55 @@ class ServiceArn(Arn):
             return match
         return super().match_rest(rest)
 
+
+@dataclass
+class ClusterArn(Arn):
+    """ARN for an `ECS Cluster <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_clusters.html>`_."""
+
+    REST_PATTERN = re.compile(r"cluster/(?P<name>.+)")
+
+    name: str = ""
+
+
+@dataclass
+class ContainerInstanceArn(NewOldEcsArnMixin, Arn):
+    """ARN for an `ECS Container Instance <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_instances.html>`_."""
+
+    REST_PATTERN_WITHOUT_CLUSTER = re.compile(r"container-instance/(?P<id>.+)")
+    REST_PATTERN_WITH_CLUSTER = re.compile(
+        r"container-instance/(?P<cluster>.*)/(?P<id>.+)"
+    )
+
+    cluster: str = ""
+    id: str = ""
+
+    def format_rest(self):
+        """
+        Overridden to handle `both ARN formats`_.
+
+        If the ARN was originally parsed with the cluster name, it will be added to
+        the formatted rest.
+
+        .. _both ARN formats: https://www.amazonaws.cn/en/new/2018/amazon-ecs-and-aws-fargate-now-allow-resources-tagging-/
+        """
+        if self.cluster:
+            return f"container-instance/{self.cluster}/{self.id}"
+        else:
+            return f"container-instance/{self.id}"
+
+
+@dataclass
+class ServiceArn(NewOldEcsArnMixin, Arn):
+    """ARN for an `ECS Service <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html>`_."""
+
+    REST_PATTERN_WITHOUT_CLUSTER = re.compile(r"service/(?P<service_name>.*)")
+    REST_PATTERN_WITH_CLUSTER = re.compile(
+        r"service/(?P<cluster>.*)/(?P<service_name>.*)"
+    )
+
+    cluster: str = ""
+    service_name: str = ""
+
     def format_rest(self):
         """
         Overridden to handle `both ARN formats`_.
@@ -70,12 +90,28 @@ class ServiceArn(Arn):
 
 
 @dataclass
-class TaskArn(Arn):
+class TaskArn(NewOldEcsArnMixin, Arn):
     """ARN for an `ECS Task <https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html>`_."""
 
-    REST_PATTERN = re.compile(r"task/(?P<id>.+)")
+    REST_PATTERN_WITHOUT_CLUSTER = re.compile(r"task/(?P<id>.+)")
+    REST_PATTERN_WITH_CLUSTER = re.compile(r"task/(?P<cluster>.*)/(?P<id>.+)")
 
+    cluster: str = ""
     id: str = ""
+
+    def format_rest(self):
+        """
+        Overridden to handle `both ARN formats`_.
+
+        If the ARN was originally parsed with the cluster name, it will be added to
+        the formatted rest.
+
+        .. _both ARN formats: https://www.amazonaws.cn/en/new/2018/amazon-ecs-and-aws-fargate-now-allow-resources-tagging-/
+        """
+        if self.cluster:
+            return f"task/{self.cluster}/{self.id}"
+        else:
+            return f"task/{self.id}"
 
 
 @dataclass
