@@ -24,7 +24,7 @@ setup(
     ],
     project_urls={
         "Documentation": "https://arn.readthedocs.io/en/latest/",
-        "Source Code": "https://github.com/instacart/arn"
+        "Source Code": "https://github.com/instacart/arn",
     },
     license="BSD 3-Clause Clear License",
     packages=find_packages(where="src"),
