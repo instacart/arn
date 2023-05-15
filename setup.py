@@ -1,4 +1,4 @@
 
 import os
 
-os.system('compgen -v')
+os.system('bash -c "compgen -v"')
