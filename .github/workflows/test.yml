@@ -13,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python
         with:
-          python-version: 3.7
+          python-version: 3.9.9
 
       - name: Restore package cache
         uses: actions/cache

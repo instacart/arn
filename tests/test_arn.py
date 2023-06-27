@@ -74,7 +74,7 @@ def test_parse_arn_invalid_rest(make_arn, arn):
 )
 def test_cant_use_reserved_field_name(make_arn, field):
     class CustomArn(Arn):
-        REST_PATTERN = re.compile(fr"(?P<{field}>.*)")
+        REST_PATTERN = re.compile(rf"(?P<{field}>.*)")
 
     arn = make_arn("service", "rest")
     with pytest.raises(
