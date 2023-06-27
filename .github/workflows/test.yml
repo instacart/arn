@@ -8,27 +8,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout
+        uses: actions/checkout@v3.5.3
 
       - name: Set up Python
-        uses: actions/setup-python
+        uses: actions/setup-python@v4.6.1
         with:
           python-version: 3.9.9
 
-      - name: Restore package cache
-        uses: actions/cache
+      - name: Restore cache
+        uses: actions/cache@v3.3.1
         with:
           path: arn.venv
           key: deps-v1-${{ hashFiles('setup.py') }}
 
       - name: Setup venv
         run: script/bootstrap
-
-      - name: Save Package Cache
-        uses: actions/cache@v2
-        with:
-          path: arn.venv
-          key: deps-v1-${{ hashFiles('setup.py') }}
 
       - name: Run lint
         run: script/lint
