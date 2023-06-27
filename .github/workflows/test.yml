@@ -1,0 +1,31 @@
+name: Lint & Test
+
+on: push
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.5.3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4.6.1
+        with:
+          python-version: 3.9.9
+
+      - name: Restore cache
+        uses: actions/cache@v3.3.1
+        with:
+          path: arn.venv
+          key: deps-v1-${{ hashFiles('setup.py') }}
+
+      - name: Setup venv
+        run: script/bootstrap
+
+      - name: Run lint
+        run: script/lint
+
+      - name: Run tests
+        run: script/test

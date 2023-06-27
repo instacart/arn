@@ -11,6 +11,7 @@ DOCS_DIR = str(BASE_DIR_PATH / "docs")
 DOCS_BUILD_DIR = str(BASE_DIR_PATH / "docs" / "_build")
 VERSION_FILE = BASE_DIR_PATH / "version.txt"
 
+
 # Lint
 @task()
 def black(ctx):
