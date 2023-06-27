@@ -3,7 +3,7 @@ name: Lint & Test
 on: push
 
 jobs:
-  build:
+  lint-and-test:
     runs-on: ubuntu-20.04
 
     steps:
